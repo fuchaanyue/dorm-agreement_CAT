@@ -1,219 +1,409 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>宿舍公约截图版</title>
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-<style>
-html, body {
-    background-color: #f0f2f5;
-    font-family: "Microsoft YaHei", sans-serif;
-    margin: 0;
-    padding: 0;
-}
-.capture-root {
-    width: 900px;
-    margin: 20px auto;
-}
-.card {
-    background: #ffffff;
-    padding: 24px;
-    border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    margin-bottom: 24px;
-    box-sizing: border-box;
-}
-h1, h2 {
-    text-align: center;
-    margin: 0 0 8px 0;
-}
-h2 {
-    border-bottom: 2px solid #4da3ff;
-    padding-bottom: 4px;
-}
-.desc {
-    text-align: center;
-    font-size: 14px;
-    color: #666;
-    margin: 5px 0 15px;
-}
-.card table {
-    border-collapse: collapse;
-    width: 850px;
-    table-layout: fixed;
-    background-color: #fafcff;
-    margin: 0 auto;
-}
-thead {
-    background-color: #4da3ff;
-    color: white;
-}
-.card th,
-.card td {
-    border: 1px solid #d0d7de;
-    padding: 8px;
-    text-align: center !important;
-    vertical-align: middle;
-    word-break: break-word;
-    font-size: 14px;
-}
-textarea {
-    width: 100%;
-    min-height: 40px;
-    resize: vertical;
-    border: none;
-    outline: none;
-    padding: 4px;
-    font-family: inherit;
-    font-size: 14px;
-    background-color: transparent;
-    white-space: pre-wrap;
-}
-textarea:focus {
-    background-color: #f1f9ff;
-    box-shadow: inset 0 0 0 2px #6bb8ff;
-}
-.btn-container {
-    text-align: center;
-    margin: 0 auto 24px auto;
-}
-button {
-    background: #4da3ff;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    padding: 12px 28px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-button:hover {
-    background: #1c86ff;
-}
-</style>
+    <meta charset="UTF-8">
+    <title>宿舍公约截图版</title>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <style>
+        html, body {
+            background-color: #f0f2f5;
+            font-family: "Microsoft YaHei", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .capture-root {
+            width: 900px;
+            margin: 20px auto;
+        }
+        .card {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            margin-bottom: 24px;
+            box-sizing: border-box;
+        }
+        h1, h2 {
+            text-align: center;
+            margin: 0 0 8px 0;
+        }
+        h2 {
+            border-bottom: 2px solid #4da3ff;
+            padding-bottom: 4px;
+        }
+        .desc {
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin: 5px 0 15px;
+        }
+        .card table {
+            border-collapse: collapse;
+            width: 850px;
+            table-layout: fixed;
+            background-color: #fafcff;
+            margin: 0 auto;
+        }
+        thead {
+            background-color: #4da3ff;
+            color: white;
+        }
+        .card th,
+        .card td {
+            border: 1px solid #d0d7de;
+            padding: 8px;
+            text-align: center !important;
+            vertical-align: middle;
+            word-break: break-word;
+            font-size: 14px;
+        }
+        textarea {
+            width: 100%;
+            min-height: 40px;
+            resize: vertical;
+            border: none;
+            outline: none;
+            padding: 4px;
+            font-family: inherit;
+            font-size: 14px;
+            background-color: transparent;
+            white-space: pre-wrap;
+        }
+        textarea:focus {
+            background-color: #f1f9ff;
+            box-shadow: inset 0 0 0 2px #6bb8ff;
+        }
+        .btn-container {
+            text-align: center;
+            margin: 0 auto 24px auto;
+        }
+        button {
+            background: #4da3ff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 28px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #1c86ff;
+        }
+        #basic-info-display p {
+            margin: 8px 0;
+            font-size: 15px;
+            color: #333;
+        }
+        /* 新增：宿舍成就列样式 */
+        #main-table td:nth-child(4) {
+            background-color: #f5f5f5;
+            position: relative;
+            color: #999;
+        }
+        /* 斜杠效果 */
+        #main-table td:nth-child(4)::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+
+        }
+        /* 取消特定行的斜杠（用于放图片） */
+        #main-table tr:nth-child(1) td:nth-child(4)::after,
+        #main-table tr:nth-child(3) td:nth-child(4)::after,
+        #main-table tr:nth-child(6) td:nth-child(4)::after {
+            background: none;
+        }
+        /* 新增：隐藏未激活的行 */
+        #main-table tbody tr {
+            display: none;
+        }
+        /* 第一行默认显示 */
+        #main-table tbody tr:first-child {
+            display: table-row;
+        }
+        /* 激活的行显示 */
+        #main-table tbody tr.active {
+            display: table-row;
+        }
+    </style>
 </head>
 <body>
+    <div class="capture-root">
+        <!-- 基本信息卡片（初始显示） -->
+        <div class="card" id="info-card">
+            <h2>基本信息</h2>
+            <p class="desc">请填写以下信息以继续</p>
+            <table>
+                <colgroup>
+                    <col style="width: 100px">
+                    <col>
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <td><label for="school">学校：</label></td>
+                        <td><input type="text" id="school" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="dorm">宿舍号：</label></td>
+                        <td><input type="text" id="dorm" required></td>
+                    </tr>
+                    <tr>
+                        <td><label for="date">填写时间：</label></td>
+                        <td><input type="date" id="date" required></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="btn-container">
+                <button id="confirm-btn">确定</button>
+            </div>
+        </div>
 
-<div class="capture-root">
-    <div class="card">
-        <h1>十平米剧场：校园宿舍生活卡牌</h1>
-        <h2>宿舍公约达成记录卡</h2>
-        <p class="desc">请将各位玩家在决策事件中经过讨论后达成的方案记录在此</p>
-        <table id="main-table">
-            <colgroup>
-                <col style="width:50px">
-                <col>
-                <col>
-                <col>
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>序号</th>
-                    <th>事件名称</th>
-                    <th>公约内容</th>
-                    <th>宿舍成就</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <!-- 主表格卡片（初始隐藏） -->
+        <div class="card" id="main-card" style="display: none;">
+            <h1>十平米剧场：校园宿舍生活卡牌</h1>
+            <h2>宿舍公约达成记录卡</h2>
+            <!-- 新增：基本信息显示区域 -->
+            <div id="basic-info-display" style="text-align: center; margin-bottom: 16px;">
+                <p>学校：<span id="display-school"></span></p>
+                <p>宿舍号：<span id="display-dorm"></span></p>
+                <p>填写时间：<span id="display-date"></span></p>
+            </div>
+            <p class="desc">请将各位玩家在决策事件中经过讨论后达成的方案记录在此</p>
+            <table id="main-table">
+                <colgroup>
+                    <col style="width:50px">
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>事件名称</th>
+                        <th>公约内容</th>
+                        <th>宿舍成就</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- 补充表格卡片（初始隐藏） -->
+        <div class="card" id="extra-card" style="display: none;">
+            <h2>宿舍公约补充</h2>
+            <p class="desc">可从公共生活、个人边界、作息生活、财务支配、社交冲突等方面讨论</p>
+            <table id="extra-table">
+                <colgroup>
+                    <col style="width:50px">
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>我们的宿舍共识</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <!-- 保存按钮（初始隐藏） -->
+        <div class="btn-container" id="save-btn-container" style="display: none;">
+            <button id="save-btn">提交并保存为高清图片</button>
+        </div>
     </div>
 
-    <div class="card">
-        <h2>宿舍公约补充</h2>
-        <p class="desc">可从公共生活、个人边界、作息生活、财务支配、社交冲突等方面讨论</p>
-        <table id="extra-table">
-            <colgroup>
-                <col style="width:50px">
-                <col>
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>序号</th>
-                    <th>我们的宿舍共识</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-</div>
-
-<div class="btn-container">
-    <button id="save-btn">提交并保存为高清图片</button>
-</div>
-
-<script>
-function generateRows(tableId, rows, cols) {
-    const tbody = document.querySelector(`#${tableId} tbody`);
-    for (let i = 1; i <= rows; i++) {
-        let tr = document.createElement("tr");
-        for (let j = 0; j < cols; j++) {
-            let td = document.createElement("td");
-            if (j === 0) {
-                td.textContent = i;
-            } else {
-                let ta = document.createElement("textarea");
-                td.appendChild(ta);
-            }
-            tr.appendChild(td);
+    <script>
+        // 检查基本信息是否填写完成
+        function checkBasicInfo() {
+            const school = document.getElementById('school').value;
+            const dorm = document.getElementById('dorm').value;
+            const date = document.getElementById('date').value;
+            return school && dorm && date;
         }
-        tbody.appendChild(tr);
-    }
-}
-generateRows("main-table", 10, 4);
-generateRows("extra-table", 5, 2);
 
-/* 自动增高 textarea */
-document.addEventListener("input", e => {
-    if (e.target.tagName.toLowerCase() === "textarea") {
-        e.target.style.height = "auto";
-        e.target.style.height = e.target.scrollHeight + "px";
-    }
-});
+        function getBase64Image(url) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.crossOrigin = "anonymous";
+                img.onload = () => {
+                    const canvas = document.createElement("canvas");
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0);
+                    resolve(canvas.toDataURL("image/png"));
+                };
+                img.src = url + "?t=" + new Date().getTime(); // 避免缓存
+            });
+        }
 
-/* 替换 textarea -> div，固化居中样式 */
-function replaceTextareas(root) {
-    const replacements = [];
-    root.querySelectorAll("textarea").forEach(ta => {
-        const cs = getComputedStyle(ta);
-        const div = document.createElement("div");
-        div.textContent = ta.value;
-        div.style.whiteSpace = "pre-wrap";
-        div.style.wordBreak = "break-word";
-        div.style.minHeight = cs.minHeight;
-        div.style.padding = cs.padding;
-        div.style.font = cs.font;
-        div.style.textAlign = "center";
-        ta.parentNode.replaceChild(div, ta);
-        replacements.push({div, ta});
-    });
-    return () => {
-        replacements.forEach(({div, ta}) => {
-            div.parentNode.replaceChild(ta, div);
+
+
+        // 点击“确定”按钮后的逻辑
+        document.getElementById('confirm-btn').addEventListener('click', () => {
+            if (checkBasicInfo()) {
+                const school = document.getElementById('school').value;
+                const dorm = document.getElementById('dorm').value;
+                const date = document.getElementById('date').value;
+
+                // 将基本信息显示在主界面上
+                document.getElementById('display-school').textContent = school;
+                document.getElementById('display-dorm').textContent = dorm;
+                document.getElementById('display-date').textContent = date;
+
+                // 隐藏基本信息卡片，显示主界面
+                document.getElementById('info-card').style.display = 'none';
+                document.getElementById('main-card').style.display = 'block';
+                document.getElementById('extra-card').style.display = 'block';
+                document.getElementById('save-btn-container').style.display = 'block';
+            } else {
+                alert('请填写所有必填项！');
+            }
         });
-    };
-}
 
+        // 动态生成表格行
+        function generateRows(tableId, rows, cols) {
+            const tbody = document.querySelector(`#${tableId} tbody`);
+            for (let i = 1; i <= rows; i++) {
+                let tr = document.createElement("tr");
+                tr.id = `row-${i}`;
+
+                for (let j = 0; j < cols; j++) {
+                    let td = document.createElement("td");
+                    if (j === 0) {
+                        td.textContent = i; // 序号列
+                    } else if (j === 3) {   // 宿舍成就列
+                        td.style.backgroundColor = "#f5f5f5";
+                        if (i === 1 || i === 3 || i === 6) {
+                            const img = document.createElement("img");
+                            img.src = `images/badge${i}.jpg`; // 图片路径
+                            img.style.maxWidth = "80%";
+                            img.style.maxHeight = "55px";
+                            td.appendChild(img);
+                        } else {
+                            td.textContent = "—"; // 其他行显示短横线
+                        }
+                    } else {
+                        let ta = document.createElement("textarea");
+                        ta.addEventListener("input", () => checkRowCompletion(i, rows));
+                        td.appendChild(ta);
+                    }
+                    tr.appendChild(td);
+                }
+                tbody.appendChild(tr);
+            }
+        }
+
+        function checkRowCompletion(currentRow, totalRows) {
+            const tr = document.querySelector(`#row-${currentRow}`);
+            const eventName = tr.querySelector("td:nth-child(2) textarea").value;
+            const agreement = tr.querySelector("td:nth-child(3) textarea").value;
+
+            if (eventName && agreement && currentRow < totalRows) {
+                const nextTr = document.querySelector(`#row-${currentRow + 1}`);
+                nextTr.classList.add("active");
+
+                // 如果是第1、3、6行，确保图片显示
+                if (currentRow + 1 === 1 || currentRow + 1 === 3 || currentRow + 1 === 6) {
+                    const imgCell = nextTr.querySelector("td:nth-child(4)");
+                    imgCell.innerHTML = ""; // 清空原有内容
+                    const img = document.createElement("img");
+                    img.src = `images/badge${currentRow + 1}.jpg`;
+                    img.style.maxWidth = "80%";
+                    img.style.maxHeight = "55px";
+                    imgCell.appendChild(img);
+                }
+            }
+        }
+
+        // 初始化表格
+        generateRows("main-table", 10, 4);
+        generateRows("extra-table", 5, 2);
+
+        // 自动调整 textarea 高度
+        document.addEventListener("input", e => {
+            if (e.target.tagName.toLowerCase() === "textarea") {
+                e.target.style.height = "auto";
+                e.target.style.height = e.target.scrollHeight + "px";
+            }
+        });
+
+        // 替换 textarea 为 div（用于截图）
+        function replaceTextareas(root) {
+            const replacements = [];
+            root.querySelectorAll("textarea").forEach(ta => {
+                const cs = getComputedStyle(ta);
+                const div = document.createElement("div");
+                div.textContent = ta.value;
+                div.style.whiteSpace = "pre-wrap";
+                div.style.wordBreak = "break-word";
+                div.style.minHeight = cs.minHeight;
+                div.style.padding = cs.padding;
+                div.style.font = cs.font;
+                div.style.textAlign = "center";
+                ta.parentNode.replaceChild(div, ta);
+                replacements.push({div, ta});
+            });
+            return () => {
+                replacements.forEach(({div, ta}) => {
+                    div.parentNode.replaceChild(ta, div);
+                });
+            };
+        }
+
+// 保存为图片
 document.getElementById("save-btn").onclick = async function () {
-    const root = document.querySelector(".capture-root");
-    const restore = replaceTextareas(root);
+    try {
+        const root = document.querySelector(".capture-root");
+        const restore = replaceTextareas(root);
 
-    const canvas = await html2canvas(root, {
-        backgroundColor: "#f0f2f5",
-        scale: 2,
-        useCORS: true,
-    });
+        // 1. 预处理：将所有图片转为Base64
+        const images = root.querySelectorAll("img");
+        for (const img of images) {
+            if (!img.src.startsWith('data:')) { // 跳过已转换的图片
+                try {
+                    img.dataset.originalSrc = img.src; // 备份原URL
+                    img.src = await getBase64Image(img.src);
+                } catch (e) {
+                    console.warn("图片转换失败:", e);
+                }
+            }
+        }
 
-    const imageData = canvas.toDataURL("image/png");
+        // 2. 截图
+        const canvas = await html2canvas(root, {
+            backgroundColor: "#f0f2f5",
+            scale: 2,
+            useCORS: true,
+            allowTaint: false // 必须为false
+        });
 
-    // 本地保存
-    const link = document.createElement("a");
-    link.href = imageData;
-    link.download = "宿舍公约.png";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+        // 3. 恢复图片原始URL（避免影响后续操作）
+        images.forEach(img => {
+            if (img.dataset.originalSrc) {
+                img.src = img.dataset.originalSrc;
+            }
+        });
 
-    restore();
+        // 4. 保存
+        const imageData = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.href = imageData;
+        link.download = "宿舍公约.png";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        restore();
+    } catch (e) {
+        console.error("截图失败:", e);
+        alert("截图失败，请确保所有图片已正确加载。错误信息: " + e.message);
+    }
 };
 </script>
 </body>
