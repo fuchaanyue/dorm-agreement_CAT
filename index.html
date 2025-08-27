@@ -376,6 +376,15 @@
                 const root = document.querySelector(".capture-content");
                 const restore = replaceTextareas(root);
 
+                // 获取学校、宿舍号和时间信息
+                const school = document.getElementById('display-school').textContent;
+                const dorm = document.getElementById('display-dorm').textContent;
+                const date = document.getElementById('display-date').textContent;
+
+                // 格式化文件名：移除特殊字符，用下划线连接
+                const picName = `${school}_${dorm}_${date}`.replace(/[\/\\?%*:|"<>]/g, '_');
+
+
                 // 临时调整样式以获得更好的截图效果
                 const originalStyles = {
                     lineHeight: root.style.lineHeight,
@@ -413,7 +422,7 @@
                 const imageData = canvas.toDataURL("image/png");
                 const link = document.createElement("a");
                 link.href = imageData;
-                link.download = "宿舍公约.png";
+                link.download = `${picName}.png`;
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
