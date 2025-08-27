@@ -24,12 +24,16 @@
             box-sizing: border-box;
         }
         h1, h2 {
-            text-align: center;
-            margin: 0 0 8px 0;
+            margin: 0 0 2px 0;
+            line-height: 1.1;
+            font-size: 24px;
         }
         h2 {
             border-bottom: 2px solid #4da3ff;
-            padding-bottom: 4px;
+            padding-bottom: 2px;
+            margin: 2px 0 6px 0;
+            line-height: 1.1;
+            font-size: 20px;
         }
         .desc {
             text-align: center;
@@ -51,11 +55,12 @@
         .card th,
         .card td {
             border: 1px solid #d0d7de;
-            padding: 8px;
+            padding: 4px 6px;
             text-align: center !important;
             vertical-align: middle;
             word-break: break-word;
             font-size: 14px;
+            line-height: 1.2;
         }
         textarea {
             width: 100%;
@@ -128,6 +133,18 @@
         /* 激活的行显示 */
         #main-table tbody tr.active {
             display: table-row;
+        }
+
+        /* 专门针对截图优化 */
+        #custom-image-area {
+            line-height: 1.2;
+        }
+
+        /* 调整文本区域 */
+        textarea {
+            line-height: 1.2;
+            min-height: 32px;
+            padding: 2px 4px;
         }
     </style>
 </head>
@@ -342,6 +359,8 @@
                 div.style.padding = cs.padding;
                 div.style.font = cs.font;
                 div.style.textAlign = "center";
+                div.style.lineHeight = "1.2"; // 确保行高一致
+                div.style.margin = "0";
                 ta.parentNode.replaceChild(div, ta);
                 replacements.push({div, ta});
             });
@@ -356,6 +375,14 @@
             try {
                 const root = document.querySelector(".capture-content");
                 const restore = replaceTextareas(root);
+
+                // 临时调整样式以获得更好的截图效果
+                const originalStyles = {
+                    lineHeight: root.style.lineHeight,
+                    fontSize: root.style.fontSize
+                };
+                root.style.lineHeight = '1.2';
+                root.style.fontSize = '14px';
 
                 const images = root.querySelectorAll("img");
                 for (const img of images) {
@@ -373,7 +400,8 @@
                     backgroundColor: "#f0f2f5",
                     scale: 2,
                     useCORS: true,
-                    allowTaint: false
+                    allowTaint: false,
+                    logging: false
                 });
 
                 images.forEach(img => {
