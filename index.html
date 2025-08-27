@@ -95,13 +95,12 @@
             font-size: 15px;
             color: #333;
         }
-        /* 新增：宿舍成就列样式 */
+        /* 宿舍成就列样式 */
         #main-table td:nth-child(4) {
             background-color: #f5f5f5;
             position: relative;
             color: #999;
         }
-        /* 斜杠效果 */
         #main-table td:nth-child(4)::after {
             content: "";
             position: absolute;
@@ -109,32 +108,38 @@
             left: 0;
             width: 100%;
             height: 100%;
-
         }
-        /* 取消特定行的斜杠（用于放图片） */
         #main-table tr:nth-child(1) td:nth-child(4)::after,
         #main-table tr:nth-child(3) td:nth-child(4)::after,
         #main-table tr:nth-child(6) td:nth-child(4)::after {
             background: none;
         }
-        /* 新增：隐藏未激活的行 */
         #main-table tbody tr {
             display: none;
         }
-        /* 第一行默认显示 */
         #main-table tbody tr:first-child {
             display: table-row;
         }
-        /* 激活的行显示 */
         #main-table tbody tr.active {
             display: table-row;
+        }
+
+        /* -------- 截图模式样式 -------- */
+        .screenshot-mode * {
+            line-height: 1.4 !important;
+            margin: 0 !important;
+        }
+        .screenshot-mode table td,
+        .screenshot-mode table th {
+            line-height: 1.2 !important;
+            padding: 6px 8px !important;
         }
     </style>
 </head>
 <body>
     <div class="capture-root">
         <div class="capture-content" id="custom-image-area">
-            <!-- 基本信息卡片（初始显示） -->
+            <!-- 基本信息卡片 -->
             <div class="card" id="info-card">
                 <h2>基本信息</h2>
                 <p class="desc">请填写以下信息以继续</p>
@@ -163,12 +168,10 @@
                 </div>
             </div>
 
-
-            <!-- 主表格卡片（初始隐藏） -->
+            <!-- 主表格卡片 -->
             <div class="card" id="main-card" style="display: none;">
                 <h1>十平米剧场：校园宿舍生活卡牌</h1>
                 <h2>宿舍公约达成记录卡</h2>
-                <!-- 新增：基本信息显示区域 -->
                 <div id="basic-info-display" style="text-align: center; margin-bottom: 16px;">
                     <p>学校：<span id="display-school"></span></p>
                     <p>宿舍号：<span id="display-dorm"></span></p>
@@ -194,7 +197,7 @@
                 </table>
             </div>
 
-            <!-- 补充表格卡片（初始隐藏） -->
+            <!-- 补充表格卡片 -->
             <div class="card" id="extra-card" style="display: none;">
                 <h2>宿舍公约补充</h2>
                 <p class="desc">可从公共生活、个人边界、作息生活、财务支配、社交冲突等方面讨论</p>
@@ -214,19 +217,14 @@
             </div>
         </div>
 
-        <!-- 保存按钮（初始隐藏） -->
+        <!-- 保存按钮 -->
         <div class="btn-container" id="save-btn-container" style="display: none;">
-            <button id="save-btn">提交并保存为高清图片</button>
+            <button id="save-btn">保存为图片</button>
         </div>
     </div>
 
     <script>
-        // 配置：定义哪些行显示图片，以及对应图片路径
-        const badgeConfig = {
-            1: "images/badge1.jpg",
-            3: "images/badge3.jpg",
-            6: "images/badge6.jpg"
-        };
+        const badgeConfig = { 1: "images/badge1.jpg", 3: "images/badge3.jpg", 6: "images/badge6.jpg" };
 
         function checkBasicInfo() {
             const school = document.getElementById('school').value;
@@ -266,17 +264,15 @@
             }
         });
 
-        // 动态生成表格行
         function generateRows(tableId, rows, cols) {
             const tbody = document.querySelector(`#${tableId} tbody`);
             for (let i = 1; i <= rows; i++) {
                 let tr = document.createElement("tr");
                 tr.id = `row-${i}`;
-
                 for (let j = 0; j < cols; j++) {
                     let td = document.createElement("td");
                     if (j === 0) {
-                        td.textContent = i; // 序号列
+                        td.textContent = i;
                     } else if (j === 3) {
                         td.style.backgroundColor = "#f5f5f5";
                         if (badgeConfig[i]) {
@@ -303,11 +299,9 @@
             const tr = document.querySelector(`#row-${currentRow}`);
             const eventName = tr.querySelector("td:nth-child(2) textarea").value;
             const agreement = tr.querySelector("td:nth-child(3) textarea").value;
-
             if (eventName && agreement && currentRow < totalRows) {
                 const nextTr = document.querySelector(`#row-${currentRow + 1}`);
                 nextTr.classList.add("active");
-
                 if (badgeConfig[currentRow + 1]) {
                     const imgCell = nextTr.querySelector("td:nth-child(4)");
                     imgCell.innerHTML = "";
@@ -357,12 +351,11 @@
                 const root = document.querySelector(".capture-content");
                 const restore = replaceTextareas(root);
 
-                // 获取学校、宿舍号和时间信息
+                root.classList.add("screenshot-mode"); // 开启截图模式
+
                 const school = document.getElementById('display-school').textContent;
                 const dorm = document.getElementById('display-dorm').textContent;
                 const date = document.getElementById('display-date').textContent;
-
-                // 格式化文件名：移除特殊字符，用下划线连接
                 const picName = `${school}_${dorm}_${date}`.replace(/[\/\\?%*:|"<>]/g, '_');
 
                 const images = root.querySelectorAll("img");
@@ -399,12 +392,12 @@
                 document.body.removeChild(link);
 
                 restore();
+                root.classList.remove("screenshot-mode"); // 恢复正常模式
             } catch (e) {
                 console.error("截图失败:", e);
-                alert("截图失败，请确保所有图片已正确加载。错误信息: " + e.message);
+                alert("截图失败: " + e.message);
             }
         };
     </script>
-
 </body>
 </html>
