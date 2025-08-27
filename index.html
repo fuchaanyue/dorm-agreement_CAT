@@ -133,87 +133,89 @@
 </head>
 <body>
     <div class="capture-root">
-        <!-- 基本信息卡片（初始显示） -->
-        <div class="card" id="info-card">
-            <h2>基本信息</h2>
-            <p class="desc">请填写以下信息以继续</p>
-            <table>
-                <colgroup>
-                    <col style="width: 100px">
-                    <col>
-                </colgroup>
-                <tbody>
-                    <tr>
-                        <td><label for="school">学校：</label></td>
-                        <td><input type="text" id="school" required></td>
-                    </tr>
-                    <tr>
-                        <td><label for="dorm">宿舍号：</label></td>
-                        <td><input type="text" id="dorm" required></td>
-                    </tr>
-                    <tr>
-                        <td><label for="date">填写时间：</label></td>
-                        <td><input type="date" id="date" required></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="btn-container">
-                <button id="confirm-btn">确定</button>
+        <div class="capture-content" id="custom-image-area">
+            <!-- 基本信息卡片（初始显示） -->
+            <div class="card" id="info-card">
+                <h2>基本信息</h2>
+                <p class="desc">请填写以下信息以继续</p>
+                <table>
+                    <colgroup>
+                        <col style="width: 100px">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td><label for="school">学校：</label></td>
+                            <td><input type="text" id="school" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="dorm">宿舍号：</label></td>
+                            <td><input type="text" id="dorm" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="date">填写时间：</label></td>
+                            <td><input type="date" id="date" required></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="btn-container">
+                    <button id="confirm-btn">确定</button>
+                </div>
+            </div>
+
+
+            <!-- 主表格卡片（初始隐藏） -->
+            <div class="card" id="main-card" style="display: none;">
+                <h1>十平米剧场：校园宿舍生活卡牌</h1>
+                <h2>宿舍公约达成记录卡</h2>
+                <!-- 新增：基本信息显示区域 -->
+                <div id="basic-info-display" style="text-align: center; margin-bottom: 16px;">
+                    <p>学校：<span id="display-school"></span></p>
+                    <p>宿舍号：<span id="display-dorm"></span></p>
+                    <p>填写时间：<span id="display-date"></span></p>
+                </div>
+                <p class="desc">请将各位玩家在决策事件中经过讨论后达成的方案记录在此</p>
+                <table id="main-table">
+                    <colgroup>
+                        <col style="width:50px">
+                        <col>
+                        <col>
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>事件名称</th>
+                            <th>公约内容</th>
+                            <th>宿舍成就</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!-- 补充表格卡片（初始隐藏） -->
+            <div class="card" id="extra-card" style="display: none;">
+                <h2>宿舍公约补充</h2>
+                <p class="desc">可从公共生活、个人边界、作息生活、财务支配、社交冲突等方面讨论</p>
+                <table id="extra-table">
+                    <colgroup>
+                        <col style="width:50px">
+                        <col>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>我们的宿舍共识</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
         </div>
 
-        <!-- 主表格卡片（初始隐藏） -->
-        <div class="card" id="main-card" style="display: none;">
-            <h1>十平米剧场：校园宿舍生活卡牌</h1>
-            <h2>宿舍公约达成记录卡</h2>
-            <!-- 新增：基本信息显示区域 -->
-            <div id="basic-info-display" style="text-align: center; margin-bottom: 16px;">
-                <p>学校：<span id="display-school"></span></p>
-                <p>宿舍号：<span id="display-dorm"></span></p>
-                <p>填写时间：<span id="display-date"></span></p>
-            </div>
-            <p class="desc">请将各位玩家在决策事件中经过讨论后达成的方案记录在此</p>
-            <table id="main-table">
-                <colgroup>
-                    <col style="width:50px">
-                    <col>
-                    <col>
-                    <col>
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>序号</th>
-                        <th>事件名称</th>
-                        <th>公约内容</th>
-                        <th>宿舍成就</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-
-        <!-- 补充表格卡片（初始隐藏） -->
-        <div class="card" id="extra-card" style="display: none;">
-            <h2>宿舍公约补充</h2>
-            <p class="desc">可从公共生活、个人边界、作息生活、财务支配、社交冲突等方面讨论</p>
-            <table id="extra-table">
-                <colgroup>
-                    <col style="width:50px">
-                    <col>
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>序号</th>
-                        <th>我们的宿舍共识</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-
-        <!-- 保存按钮（初始隐藏） -->
-        <div class="btn-container" id="save-btn-container" style="display: none;">
-            <button id="save-btn">提交并保存为高清图片</button>
+        <div class="bottom-buttons">
+            <button id="save-btn">保存为图片</button>
         </div>
     </div>
 
@@ -351,7 +353,7 @@
 
         document.getElementById("save-btn").onclick = async function () {
             try {
-                const root = document.querySelector(".capture-root");
+                const root = document.querySelector(".capture-content");
                 const restore = replaceTextareas(root);
 
                 const images = root.querySelectorAll("img");
