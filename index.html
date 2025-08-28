@@ -48,7 +48,9 @@
             background-color: #4da3ff;
             color: white;
         }
-        .card th,
+        .card th{
+            text-align: center !important;
+        }
         .card td {
             border: 1px solid #d0d7de;
             padding: 8px;
@@ -134,6 +136,12 @@
             line-height: 1.2 !important;
             padding: 6px 8px !important;
         }
+        /* 添加到现有CSS中 */
+        .card thead th {
+            font-size: 20px !important;
+            font-weight: bold !important;
+        }
+
     </style>
 </head>
 <body>
@@ -141,11 +149,11 @@
         <div class="capture-content" id="custom-image-area">
             <!-- 基本信息卡片 -->
             <div class="card" id="info-card">
-                <h2>基本信息</h2>
-                <p class="desc">请填写以下信息以继续</p>
+                <h2>十平米剧场：校园宿舍生活卡牌</h2>
+                <p class="desc">请玩家补充信息以继续游戏</p>
                 <table>
                     <colgroup>
-                        <col style="width: 100px">
+                        <col style="width: 120px">
                         <col>
                     </colgroup>
                     <tbody>
@@ -154,8 +162,24 @@
                             <td><input type="text" id="school" required></td>
                         </tr>
                         <tr>
-                            <td><label for="dorm">宿舍号：</label></td>
-                            <td><input type="text" id="dorm" required></td>
+                            <td><label for="campus">校区：</label></td>
+                            <td><input type="text" id="campus" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="buildingNum">宿舍楼号：</label></td>
+                            <td><input type="text" id="buildingNum" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="dormNum">宿舍号：</label></td>
+                            <td><input type="text" id="dormNum" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="name">填写人姓名：</label></td>
+                            <td><input type="text" id="name" required></td>
+                        </tr>
+                        <tr>
+                            <td><label for="phoneNum">填写人手机号：</label></td>
+                            <td><input type="text" id="phoneNum" required></td>
                         </tr>
                         <tr>
                             <td><label for="date">填写时间：</label></td>
@@ -163,6 +187,7 @@
                         </tr>
                     </tbody>
                 </table>
+                <div style="height: 24px;"></div>
                 <div class="btn-container">
                     <button id="confirm-btn">确定</button>
                 </div>
@@ -174,13 +199,17 @@
                 <h2>宿舍公约达成记录卡</h2>
                 <div id="basic-info-display" style="text-align: center; margin-bottom: 16px;">
                     <p>学校：<span id="display-school"></span></p>
-                    <p>宿舍号：<span id="display-dorm"></span></p>
+                    <p>校区：<span id="display-campus"></span></p>
+                    <p>宿舍楼号：<span id="display-buildingNum"></span></p>
+                    <p>宿舍号：<span id="display-dormNum"></span></p>
+                    <p>填写人姓名：<span id="display-name"></span></p>
+                    <p>填写人手机号：<span id="display-phoneNum"></span></p>
                     <p>填写时间：<span id="display-date"></span></p>
                 </div>
                 <p class="desc">请将各位玩家在决策事件中经过讨论后达成的方案记录在此</p>
                 <table id="main-table">
                     <colgroup>
-                        <col style="width:50px">
+                        <col style="width:80px">
                         <col>
                         <col>
                         <col>
@@ -199,11 +228,11 @@
 
             <!-- 补充表格卡片 -->
             <div class="card" id="extra-card" style="display: none;">
-                <h2>宿舍公约补充</h2>
+                <h2>宿舍公约补充（仅限高阶版卡牌功能）</h2>
                 <p class="desc">可从公共生活、个人边界、作息生活、财务支配、社交冲突等方面讨论</p>
                 <table id="extra-table">
                     <colgroup>
-                        <col style="width:50px">
+                        <col style="width:80px">
                         <col>
                     </colgroup>
                     <thead>
@@ -228,9 +257,13 @@
 
         function checkBasicInfo() {
             const school = document.getElementById('school').value;
-            const dorm = document.getElementById('dorm').value;
+            const campus = document.getElementById('campus').value;
+            const buildingNum = document.getElementById('buildingNum').value;
+            const dormNum = document.getElementById('dormNum').value;
+            const name = document.getElementById('name').value;
+            const phoneNum = document.getElementById('phoneNum').value;
             const date = document.getElementById('date').value;
-            return school && dorm && date;
+            return school && campus && buildingNum && dormNum && name && phoneNum && date ;
         }
 
         function getBase64Image(url) {
@@ -252,7 +285,11 @@
         document.getElementById('confirm-btn').addEventListener('click', () => {
             if (checkBasicInfo()) {
                 document.getElementById('display-school').textContent = document.getElementById('school').value;
-                document.getElementById('display-dorm').textContent = document.getElementById('dorm').value;
+                document.getElementById('display-campus').textContent = document.getElementById('campus').value;
+                document.getElementById('display-buildingNum').textContent = document.getElementById('buildingNum').value;
+                document.getElementById('display-dormNum').textContent = document.getElementById('dormNum').value;
+                document.getElementById('display-name').textContent = document.getElementById('name').value;
+                document.getElementById('display-phoneNum').textContent = document.getElementById('phoneNum').value;
                 document.getElementById('display-date').textContent = document.getElementById('date').value;
 
                 document.getElementById('info-card').style.display = 'none';
@@ -352,11 +389,14 @@
                 const restore = replaceTextareas(root);
 
                 root.classList.add("screenshot-mode"); // 开启截图模式
-
                 const school = document.getElementById('display-school').textContent;
-                const dorm = document.getElementById('display-dorm').textContent;
+                const campus = document.getElementById('display-campus').textContent;
+                const buildingNum = document.getElementById('display-buildingNum').textContent;
+                const dormNum = document.getElementById('display-dormNum').textContent;
+                const name = document.getElementById('display-name').textContent;
+                const phoneNum = document.getElementById('display-phoneNum').textContent;
                 const date = document.getElementById('display-date').textContent;
-                const picName = `${school}_${dorm}_${date}`.replace(/[\/\\?%*:|"<>]/g, '_');
+                const picName = `${school}_${campus}_${buildingNum}_${dormNum}_${name}_${phoneNum}_${date}`.replace(/[\/\\?%*:|"<>]/g, '_');
 
                 const images = root.querySelectorAll("img");
                 for (const img of images) {
