@@ -141,6 +141,26 @@
             font-size: 20px !important;
             font-weight: bold !important;
         }
+        .card td input#school {
+          width: 100%;
+          padding: 6px 10px;
+          font-size: 14px;
+          box-sizing: border-box;
+        }
+        .card td input#dorm {
+          width: 100%;
+          padding: 6px 10px;
+          font-size: 14px;
+          box-sizing: border-box;
+        }
+        .card td input#name {
+          width: 100%;
+          padding: 6px 10px;
+          font-size: 14px;
+          box-sizing: border-box;
+        }
+
+
 
     </style>
 </head>
@@ -153,7 +173,7 @@
                 <p class="desc">请玩家补充信息以继续游戏</p>
                 <table>
                     <colgroup>
-                        <col style="width: 120px">
+                        <col style="width: 240px">
                         <col>
                     </colgroup>
                     <tbody>
@@ -162,24 +182,12 @@
                             <td><input type="text" id="school" required></td>
                         </tr>
                         <tr>
-                            <td><label for="campus">校区：</label></td>
-                            <td><input type="text" id="campus" required></td>
+                            <td><label for="dorm">宿舍（校区+楼号+宿舍号）：</label></td>
+                            <td><input type="text" id="dorm" required></td>
                         </tr>
                         <tr>
-                            <td><label for="buildingNum">宿舍楼号：</label></td>
-                            <td><input type="text" id="buildingNum" required></td>
-                        </tr>
-                        <tr>
-                            <td><label for="dormNum">宿舍号：</label></td>
-                            <td><input type="text" id="dormNum" required></td>
-                        </tr>
-                        <tr>
-                            <td><label for="name">填写人姓名：</label></td>
+                            <td><label for="name">填写人（姓名+手机号）：</label></td>
                             <td><input type="text" id="name" required></td>
-                        </tr>
-                        <tr>
-                            <td><label for="phoneNum">填写人手机号：</label></td>
-                            <td><input type="text" id="phoneNum" required></td>
                         </tr>
                         <tr>
                             <td><label for="date">填写时间：</label></td>
@@ -199,11 +207,8 @@
                 <h2>宿舍公约达成记录卡</h2>
                 <div id="basic-info-display" style="text-align: center; margin-bottom: 16px;">
                     <p>学校：<span id="display-school"></span></p>
-                    <p>校区：<span id="display-campus"></span></p>
-                    <p>宿舍楼号：<span id="display-buildingNum"></span></p>
-                    <p>宿舍号：<span id="display-dormNum"></span></p>
-                    <p>填写人姓名：<span id="display-name"></span></p>
-                    <p>填写人手机号：<span id="display-phoneNum"></span></p>
+                    <p>宿舍：<span id="display-dorm"></span></p>
+                    <p>填写人：<span id="display-name"></span></p>
                     <p>填写时间：<span id="display-date"></span></p>
                 </div>
                 <p class="desc">请将各位玩家在决策事件中经过讨论后达成的方案记录在此</p>
@@ -257,13 +262,10 @@
 
         function checkBasicInfo() {
             const school = document.getElementById('school').value;
-            const campus = document.getElementById('campus').value;
-            const buildingNum = document.getElementById('buildingNum').value;
-            const dormNum = document.getElementById('dormNum').value;
+            const dorm = document.getElementById('dorm').value;
             const name = document.getElementById('name').value;
-            const phoneNum = document.getElementById('phoneNum').value;
             const date = document.getElementById('date').value;
-            return school && campus && buildingNum && dormNum && name && phoneNum && date ;
+            return school && dorm && name && date ;
         }
 
         function getBase64Image(url) {
@@ -285,11 +287,8 @@
         document.getElementById('confirm-btn').addEventListener('click', () => {
             if (checkBasicInfo()) {
                 document.getElementById('display-school').textContent = document.getElementById('school').value;
-                document.getElementById('display-campus').textContent = document.getElementById('campus').value;
-                document.getElementById('display-buildingNum').textContent = document.getElementById('buildingNum').value;
-                document.getElementById('display-dormNum').textContent = document.getElementById('dormNum').value;
+                document.getElementById('display-dorm').textContent = document.getElementById('dorm').value;
                 document.getElementById('display-name').textContent = document.getElementById('name').value;
-                document.getElementById('display-phoneNum').textContent = document.getElementById('phoneNum').value;
                 document.getElementById('display-date').textContent = document.getElementById('date').value;
 
                 document.getElementById('info-card').style.display = 'none';
@@ -390,13 +389,10 @@
 
                 root.classList.add("screenshot-mode"); // 开启截图模式
                 const school = document.getElementById('display-school').textContent;
-                const campus = document.getElementById('display-campus').textContent;
-                const buildingNum = document.getElementById('display-buildingNum').textContent;
-                const dormNum = document.getElementById('display-dormNum').textContent;
+                const dorm = document.getElementById('display-dorm').textContent;
                 const name = document.getElementById('display-name').textContent;
-                const phoneNum = document.getElementById('display-phoneNum').textContent;
                 const date = document.getElementById('display-date').textContent;
-                const picName = `${school}_${campus}_${buildingNum}_${dormNum}_${name}_${phoneNum}_${date}`.replace(/[\/\\?%*:|"<>]/g, '_');
+                const picName = `${school}_${dorm}_${name}_${date}`.replace(/[\/\\?%*:|"<>]/g, '_');
 
                 const images = root.querySelectorAll("img");
                 for (const img of images) {
