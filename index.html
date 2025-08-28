@@ -159,6 +159,16 @@
           font-size: 14px;
           box-sizing: border-box;
         }
+        .game-reminder-banner {
+            color: #ff6b6b  ;
+            padding: 12px 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            margin: 10px;
+            position: relative;
+            z-index: 1000;
+        }
 
 
 
@@ -166,6 +176,9 @@
 </head>
 <body>
     <div class="capture-root">
+        <div id="game-reminder" class="game-reminder-banner">
+            <strong>提醒：</strong>在游戏期间，请勿关闭页面，以免数据丢失
+        </div>
         <div class="capture-content" id="custom-image-area">
             <!-- 基本信息卡片 -->
             <div class="card" id="info-card">
@@ -386,6 +399,11 @@
             try {
                 const root = document.querySelector(".capture-content");
                 const restore = replaceTextareas(root);
+                const gameReminder = document.getElementById('game-reminder');
+
+                // 截图前隐藏提醒横幅
+                if (gameReminder) gameReminder.style.display = 'none';
+
 
                 root.classList.add("screenshot-mode"); // 开启截图模式
                 const school = document.getElementById('display-school').textContent;
@@ -406,12 +424,16 @@
                     }
                 }
 
-                const canvas = await html2canvas(root, {
+                const canvas = await html2canvas(document.querySelector(".capture-content"), {
                     backgroundColor: "#f0f2f5",
                     scale: 2,
                     useCORS: true,
                     allowTaint: false
                 });
+
+                 // 恢复提醒横幅显示
+                if (gameReminder) gameReminder.style.display = 'block';
+
 
                 images.forEach(img => {
                     if (img.dataset.originalSrc) {
